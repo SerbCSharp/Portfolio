@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
+const stopCube = document.querySelector(".StopCube");
+
 // initialize the scene
 const scene = new THREE.Scene();
 
@@ -11,13 +13,12 @@ const cubeMaterial = new THREE.MeshBasicMaterial({
   wireframe: true,
 });
 const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
 scene.add(cubeMesh);
 
 // initialize the camera
 const camera = new THREE.PerspectiveCamera(
   35,
-  window.innerWidth / window.innerHeight,
+  (window.innerWidth * 3) / 4 / window.innerHeight,
   0.1,
   200,
 );
@@ -29,21 +30,12 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
   antialias: true,
 });
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize((window.innerWidth * 3) / 4, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // instantiate the controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-// controls.autoRotate = true;
-
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-const timer = new THREE.Clock();
 
 // render the scene
 const renderloop = () => {
@@ -54,4 +46,15 @@ const renderloop = () => {
   window.requestAnimationFrame(renderloop);
 };
 
+const timer = new THREE.Clock();
 renderloop();
+
+window.addEventListener("resize", () => {
+  camera.aspect = (window.innerWidth * 3) / 4 / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize((window.innerWidth * 3) / 4, window.innerHeight);
+});
+
+stopCube.addEventListener("click", () => {
+  cubeMesh.rotation.x += THREE.MathUtils.degToRad(50);
+});
