@@ -1,22 +1,22 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { texting } from "./model.js";
+import { Meshs } from "./Mesh.js";
 
 // initialize the scene
 const scene = new THREE.Scene();
 
 // add objects to the scene
-const cubeMesh = texting();
-scene.add(cubeMesh);
+const meshs = Meshs();
+scene.add(meshs);
 
 // initialize the camera
 const camera = new THREE.PerspectiveCamera(
-  35,
+  75,
   window.innerWidth / window.innerHeight,
   0.1,
   200,
 );
-camera.position.z = 5;
+camera.position.z = 2;
 
 // initialize the renderer
 const canvas = document.querySelector(".threejs");
@@ -33,7 +33,6 @@ controls.enableDamping = true;
 
 // render the scene
 const renderloop = () => {
-  cubeMesh.rotation.y += THREE.MathUtils.degToRad(1);
   controls.update();
   renderer.render(scene, camera);
   window.requestAnimationFrame(renderloop);
