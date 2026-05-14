@@ -51,6 +51,10 @@ controls.addEventListener("dragend", function (event) {
   orbitControls.enabled = true;
 });
 
+controls.addEventListener("drag", function (event) {
+  // Ограничиваем движение по высоте (y = 0.5)
+  event.object.position.z = 1;
+});
 const clock = new THREE.Clock();
 let previousTime = 0;
 
