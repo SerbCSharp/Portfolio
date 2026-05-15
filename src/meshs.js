@@ -16,13 +16,6 @@ export default function () {
   const map3D = Frame(1.15, 0, 0.85, "");
   const airFight = Frame(2.3, 0, 0.85, "");
 
-  const cubeGeometry = new THREE.BoxGeometry();
-  const cubeMaterial = new THREE.MeshBasicMaterial({
-    color: "red",
-  });
-  const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  plane.castShadow = true;
-
   const group = new THREE.Group();
   group.add(plane);
   group.add(portfolio);
@@ -30,7 +23,6 @@ export default function () {
   group.add(configurator3D);
   group.add(map3D);
   group.add(airFight);
-  group.add(cube);
   group.rotateX(THREE.MathUtils.degToRad(-90));
   group.rotateZ(THREE.MathUtils.degToRad(35));
   group.position.y = -0.82;

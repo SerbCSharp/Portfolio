@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Meshs from "./meshs.js";
-import { DragControls } from "three/examples/jsm/controls/DragControls.js";
 
 // initialize the scene
 const scene = new THREE.Scene();
@@ -32,29 +31,6 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const orbitControls = new OrbitControls(camera, canvas);
 orbitControls.enableDamping = true;
 
-// Объекты, которые можно перетаскивать
-const objects = [meshs.children[1], meshs.children[6]];
-
-const controls = new DragControls(
-  objects, // Список объектов
-  camera, // Камера
-  renderer.domElement, // Элемент холста
-);
-
-// Отключение OrbitControls при начале перетаскивания (важно!)
-controls.addEventListener("dragstart", function (event) {
-  orbitControls.enabled = false;
-});
-
-// Включение OrbitControls обратно
-controls.addEventListener("dragend", function (event) {
-  orbitControls.enabled = true;
-});
-
-controls.addEventListener("drag", function (event) {
-  // Ограничиваем движение по высоте (y = 0.5)
-  event.object.position.z = 1;
-});
 const clock = new THREE.Clock();
 let previousTime = 0;
 
