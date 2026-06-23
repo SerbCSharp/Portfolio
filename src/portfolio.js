@@ -40,10 +40,6 @@ const renderloop = () => {
   const delta = currentTime - previousTime;
   previousTime = currentTime;
 
-  // meshs.rotation.y += THREE.MathUtils.degToRad(1) * delta * 20;
-  // meshs.children[2].scale.y = Math.sin(currentTime);
-  // meshs.children[2].position.y = Math.sin(currentTime);
-
   orbitControls.update();
   renderer.render(scene, camera);
   window.requestAnimationFrame(renderloop);
