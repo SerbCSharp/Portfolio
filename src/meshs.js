@@ -34,6 +34,8 @@ function Frame(x, y, z, name) {
   const portalGeometry = new THREE.PlaneGeometry(1.1, 1.6);
   const portalMaterial = new THREE.MeshBasicMaterial({
     side: THREE.DoubleSide,
+    transparent: true, // Включаем прозрачность
+    opacity: 0.5, // Делаем плоскость полупрозрачной
   });
   const frame = new THREE.Mesh(portalGeometry, portalMaterial);
   frame.castShadow = true;
