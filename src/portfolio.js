@@ -1,13 +1,31 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import Meshs from "./meshs.js";
+import { Pane } from "tweakpane";
+import { Plane, Meshs } from "./meshs.js";
+import { label } from "three/src/Three.TSL.js";
+
+const pane = new Pane();
 
 // initialize the scene
 const scene = new THREE.Scene();
 
 // add objects to the scene
+const plane = Plane();
 const meshs = Meshs();
-scene.add(meshs);
+
+const group = new THREE.Group();
+group.add(plane);
+group.add(meshs);
+group.rotation.x = THREE.MathUtils.degToRad(10);
+group.rotateY(THREE.MathUtils.degToRad(15));
+scene.add(group);
+
+pane.addBinding(group.rotation, "x", {
+  min: -10,
+  max: 10,
+  step: 0.01,
+  label: "RotationX",
+});
 
 // initialize the camera
 const camera = new THREE.PerspectiveCamera(
@@ -16,7 +34,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   200,
 );
-camera.position.z = 3.5;
+camera.position.z = 3.6;
 
 // initialize the renderer
 const canvas = document.querySelector(".threejs");
@@ -39,6 +57,8 @@ const renderloop = () => {
   const currentTime = clock.getElapsedTime();
   const delta = currentTime - previousTime;
   previousTime = currentTime;
+
+  //console.log(Math.sin(currentTime));
 
   orbitControls.update();
   renderer.render(scene, camera);
