@@ -10,7 +10,6 @@ const scene = new THREE.Scene();
 const plane = Plane();
 const meshs = Meshs();
 const magicWindow = MagicWindow();
-const innerWorld = InnerWorld(magicWindow);
 
 const group = new THREE.Group();
 group.add(plane);
@@ -39,6 +38,15 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+const target = new THREE.WebGLRenderTarget(512, 512);
+// // 1. Рендерим сцену в текстуру
+// renderer.setRenderTarget(target);
+// renderer.render(scene, camera);
+// // 2. Возвращаем рендер на обычный экран
+// renderer.setRenderTarget(null);
+// renderer.render(scene, camera);
+const innerWorld = InnerWorld(magicWindow, target.texture);
+
 // instantiate the controls
 const orbitControls = new OrbitControls(camera, canvas);
 orbitControls.enableDamping = true;
@@ -47,7 +55,15 @@ orbitControls.enableDamping = true;
 const renderloop = () => {
   orbitControls.update();
   renderer.clearStencil(); // Очистка перед кадром
-  innerWorld.rotation.y += 0.01;
+
+  innerWorld.visible = false;
+  // 1. Рендерим сцену в текстуру
+  renderer.setRenderTarget(target);
+  renderer.render(scene, camera);
+  // 2. Возвращаем рендер на обычный экран
+  renderer.setRenderTarget(null);
+  innerWorld.visible = true;
+
   renderer.render(scene, camera);
   window.requestAnimationFrame(renderloop);
 };

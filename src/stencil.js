@@ -20,10 +20,10 @@ export const MagicWindow = function () {
 };
 
 // Внутренний мир (отображается только в маске)
-export const InnerWorld = function (magicWindow) {
+export const InnerWorld = function (magicWindow, texture) {
   const innerObject = new THREE.Mesh(
-    new THREE.BoxGeometry(0.5, 0.5, 0.5),
-    new THREE.MeshNormalMaterial(),
+    new THREE.PlaneGeometry(1.1, 1.6),
+    new THREE.MeshBasicMaterial({ map: texture }),
   );
   // Настройка материала на проверку трафарета
   innerObject.material.stencilWrite = true;
